@@ -81,10 +81,41 @@ fun GreetingImage(message:String, from:String, modifier: Modifier=Modifier){
         GreetingText(message = message, from = from)
     }
 }
+
+@Composable
+fun Article(title:String, paraOne:String, paraTwo:String,modifier:Modifier=Modifier){
+    Column (modifier){
+        Image(painter = painterResource(
+            id = R.drawable.bg_compose_background),
+            contentDescription = null,
+        )
+        Text(
+            text = title,
+            fontSize = 24.sp,
+            modifier = modifier.padding(16.dp)
+
+        )
+        Text(
+            text = paraOne,
+            textAlign = TextAlign.Justify,
+            modifier=modifier.padding(horizontal = 16.dp)
+        )
+        Text(
+            text = paraTwo,
+            textAlign = TextAlign.Justify,
+            modifier=modifier.padding(16.dp)
+        )
+    }
+
+}
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun BirthdayCardPreview() {
     HbdCardTheme {
-        GreetingImage(message = "Happy Birthday Isaac",from="from. Donna")
+        Article(
+            title = stringResource(R.string.jetpack_compose_tutorial),
+            paraOne = stringResource(R.string.jetpack_compose),
+            paraTwo = stringResource(R.string.jetpack_tutorial)
+        )
     }
 }
