@@ -40,6 +40,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.donna6355.tipcalculator.ui.theme.TIpCalculatorTheme
+import org.jetbrains.annotations.VisibleForTesting
 import java.text.NumberFormat
 
 class MainActivity : ComponentActivity() {
@@ -118,7 +119,8 @@ fun TipLayout() {
     }
 }
 
-private fun tipCalculate(
+@VisibleForTesting
+internal fun tipCalculate(
     bill: Double,
     tip: Double = 15.0,
     roundUp: Boolean,
