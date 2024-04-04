@@ -57,6 +57,10 @@ fun TipLayout() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        var amountInput by remember { mutableStateOf("") }
+        val amount: Double = amountInput.toDoubleOrNull() ?: 0.0
+        val tip: String = tipCaculate(amount)
+
         Text(
             text = stringResource(R.string.calculate_tip),
             modifier = Modifier
@@ -64,12 +68,14 @@ fun TipLayout() {
                 .align(alignment = Alignment.Start)
         )
         EditNumberField(
+            value = amountInput,
+            onValueChange = { amountInput = it },
             modifier = Modifier
                 .padding(bottom = 32.dp)
                 .fillMaxWidth()
         )
         Text(
-            text = stringResource(R.string.tip_amount, "$0.00"),
+            text = stringResource(R.string.tip_amount, tip),
             style = MaterialTheme.typography.displaySmall
         )
         Spacer(modifier = Modifier.height(150.dp))
@@ -83,15 +89,14 @@ private fun tipCaculate(bill: Double, tip: Double = 0.15): String {
 }
 
 @Composable
-fun EditNumberField(modifier: Modifier = Modifier) {
-    var amountInput by remember {
-        mutableStateOf("")
-    }
-    val amount: Double = amountInput.toDoubleOrNull() ?: 0.0
-    val tip: String = tipCaculate(amount)
+fun EditNumberField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     TextField(
-        value = amountInput,
-        onValueChange = { amountInput = it },
+        value = value,
+        onValueChange = onValueChange,
         modifier = modifier,
         label = { Text(text = stringResource(id = R.string.bill_amount)) },
         singleLine = true,
