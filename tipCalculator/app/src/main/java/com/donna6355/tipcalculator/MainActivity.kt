@@ -5,10 +5,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,10 +19,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -28,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -35,10 +41,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.donna6355.tipcalculator.ui.theme.TIpCalculatorTheme
 import org.jetbrains.annotations.VisibleForTesting
 import java.text.NumberFormat
@@ -52,8 +60,10 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    TipLayout()
+//                    TipLayout()
+                    ArtSpaceLayout()
                 }
+
             }
         }
     }
@@ -183,8 +193,94 @@ fun RoundTheTipRow(
     }
 }
 
-@Preview(showSystemUi = true)
+//@Preview(showSystemUi = true)
+//@Composable
+//fun TipLayoutPreview() {
+//    TipLayout()
+//}
+
 @Composable
-fun TipLayoutPreview() {
-    TipLayout()
+fun ArtSpaceLayout() {
+    var currentIdx by remember { mutableIntStateOf(0) }
+    val image = when (currentIdx) {
+        0 -> R.drawable.meow
+        1 -> R.drawable.zzz
+        else -> R.drawable.analyze_meow
+    }
+    val title = when (currentIdx) {
+        0 -> R.string.meow
+        1 -> R.string.zzz
+        else -> R.string.analyze_meow
+    }
+
+    Column(
+        modifier = Modifier
+            .statusBarsPadding()
+            .padding(horizontal = 40.dp)
+            .safeDrawingPadding()
+            .fillMaxHeight(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        CatPicture(image)
+        CatName(title)
+        SelectButton(
+            onPrevClicked = { if (currentIdx > 0) currentIdx -= 1 else currentIdx = 2 },
+            onNextClicked = { if (currentIdx > 1) currentIdx = 0 else currentIdx += 1 },
+        )
+    }
+
+}
+
+@Composable
+fun CatPicture(
+    @DrawableRes img: Int,
+    modifier: Modifier = Modifier
+) {
+    Image(
+        painter = painterResource(img),
+        contentDescription = null,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(248.dp)
+    )
+}
+
+@Composable
+fun CatName(
+    @StringRes title: Int,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = stringResource(title),
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp,
+        modifier = Modifier.padding(vertical = 32.dp)
+    )
+}
+
+@Composable
+fun SelectButton(
+    onPrevClicked: () -> Unit,
+    onNextClicked: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row {
+        Button(
+            onClick = onPrevClicked,
+        ) {
+            Text("Prev")
+        }
+        Spacer(modifier = Modifier.width(20.dp))
+        Button(onClick = onNextClicked) {
+            Text("Next")
+        }
+    }
+}
+
+
+@Composable
+@Preview(showSystemUi = true)
+fun ArtSpacePreview() {
+    ArtSpaceLayout()
 }
