@@ -1,6 +1,7 @@
 package com.donna6355.affirmationapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateColorAsState
@@ -55,9 +56,12 @@ import com.donna6355.affirmationapp.model.Affirmation
 import com.donna6355.affirmationapp.model.Topic
 import com.donna6355.affirmationapp.ui.theme.AffirmationAppTheme
 
+private const val TAG = "MainActivity"
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate Called")
         setContent {
             AffirmationAppTheme {
                 // A surface container using the 'background' color from the theme
@@ -71,6 +75,28 @@ class MainActivity : ComponentActivity() {
 
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, "onStart Called")
+        Log.e(TAG,"Sample for Error")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "OnStop Called")
+        Log.i(TAG, "Sample for Info")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "OnResume Called")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG,"OnPause called")
     }
 }
 
