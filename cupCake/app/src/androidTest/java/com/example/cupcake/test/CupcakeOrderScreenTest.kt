@@ -8,6 +8,7 @@ import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.example.cupcake.R
+import com.example.cupcake.data.DataSource
 import com.example.cupcake.ui.SelectOptionScreen
 import com.example.cupcake.ui.StartOrderScreen
 import org.junit.Rule
@@ -45,24 +46,36 @@ class CupcakeOrderScreenTest {
         composeTestRule.onNodeWithStringId(R.string.next).assertIsNotEnabled()
     }
 
-    @Composable
     @Test
     fun startOrderScreen_verifyContent() {
-        val qty = listOf(
-            Pair(R.string.chocolate, 1),
-            Pair(R.string.subtotal_price, 4),
-            Pair(R.string.six_cupcakes, 8)
-        )
+//        val qty = listOf(
+//            Pair(R.string.app_name, 1),
+//            Pair(R.string.order_cupcakes, 6),
+//            Pair(R.string.twelve_cupcakes, 12)
+//        );
+//        composeTestRule.setContent {
+//            StartOrderScreen(
+//                quantityOptions = qty,
+//                onNextButtonClicker = {}
+//            )
+//        }
+//
+//        qty.forEach {
+//            composeTestRule.onNodeWithStringId(it.first).assertIsDisplayed()
+//        }
 
+        // When StartOrderScreen is loaded
         composeTestRule.setContent {
             StartOrderScreen(
-                quantityOptions = qty,
+                quantityOptions = DataSource.quantityOptions,
                 onNextButtonClicker = {}
             )
         }
-        qty.forEach {
+
+        // Then all the options are displayed on the screen.
+        DataSource.quantityOptions.forEach {
             composeTestRule.onNodeWithStringId(it.first).assertIsDisplayed()
         }
-
     }
+
 }
