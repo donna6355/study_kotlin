@@ -52,7 +52,7 @@ import com.example.reply.data.local.LocalAccountsDataProvider
 fun ReplyListOnlyContent(
     replyUiState: ReplyUiState,
     onEmailCardPressed: (Email) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val emails = replyUiState.currentMailboxEmails
 
@@ -85,7 +85,7 @@ fun ReplyListOnlyContent(
 fun ReplyListAndDetailContent(
     replyUiState: ReplyUiState,
     onEmailCardPressed: (Email) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val emails = replyUiState.currentMailboxEmails
     Row(modifier = modifier) {
@@ -112,8 +112,9 @@ fun ReplyListAndDetailContent(
         }
         val activity = LocalContext.current as Activity
         ReplyDetailsScreen(
+            isFullScreen = false,
             replyUiState = replyUiState,
-            onBackPressed = {},
+            onBackPressed = { activity.finish() },
             modifier = Modifier.weight(1f)
         )
     }
@@ -125,7 +126,7 @@ fun ReplyEmailListItem(
     email: Email,
     selected: Boolean,
     onCardClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier,
@@ -215,7 +216,7 @@ fun ReplyProfileImage(
 @Composable
 fun ReplyLogo(
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.primary
+    color: Color = MaterialTheme.colorScheme.primary,
 ) {
     Image(
         painter = painterResource(R.drawable.logo),
