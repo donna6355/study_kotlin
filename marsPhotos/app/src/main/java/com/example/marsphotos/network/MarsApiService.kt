@@ -1,5 +1,6 @@
 package com.example.marsphotos.network
 
+import com.example.marsphotos.ui.screens.MarsUiState
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
