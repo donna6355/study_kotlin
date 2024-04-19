@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException
@@ -21,9 +22,9 @@ class ItemDaoTest {
     private lateinit var inventoryDatabase: InventoryDatabase
 
 
-
     private var item1 = Item(1, "Apples", 10.0, 20)
     private var item2 = Item(2, "Bananas", 15.0, 97)
+
     @Before
     fun createDb() {
         val context: Context = ApplicationProvider.getApplicationContext()
@@ -68,4 +69,28 @@ class ItemDaoTest {
         assertEquals(allItems[0], item1)
         assertEquals(allItems[1], item2)
     }
+
+    @Test
+    @Throws(Exception::class)
+    fun daoUpdateItems_updatesItemsInDB() = runBlocking {
+        val update = Item(id = 1, name = "Isaac", price = 1231.0, quantity = 1)
+        val updateTwo = Item(id = 2, name = "Kkomi", price = 500.0, quantity = 2)
+        addTwoItemsToDb()
+        itemDao.update(update)
+        itemDao.update(updateTwo)
+        val allItems = itemDao.getAllItems().first()
+        assertEquals(allItems[0], update)
+        assertEquals(allItems[1], updateTwo)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun daoDeleteItems_deletesAllItemsFromDB() = runBlocking {
+        addTwoItemsToDb()
+        itemDao.delete(item1)
+        itemDao.delete(item2)
+        val allItems = itemDao.getAllItems().first()
+        assertTrue(allItems.isEmpty())
+    }
+
 }
