@@ -47,7 +47,7 @@ class TrackerFragment : Fragment() {
     private val adapter = JuiceListAdapter(
         onEdit = { drink ->
             findNavController().navigate(
-                TrackerFragmentDirections.actionTrackerFragmentToEntryDialogFragment(drink.id)
+                TrackerFragmentDirections.actionTrackerFragmentToEntryDialogFragment2(drink.id)
             )
         },
         onDelete = { drink ->
@@ -61,7 +61,7 @@ class TrackerFragment : Fragment() {
 
         binding.fab.setOnClickListener { fabView ->
             fabView.findNavController().navigate(
-                TrackerFragmentDirections.actionTrackerFragmentToEntryDialogFragment()
+                TrackerFragmentDirections.actionTrackerFragmentToEntryDialogFragment2()
             )
         }
 
